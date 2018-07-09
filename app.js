@@ -1,15 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var fs = require('fs')
-var path = require('path')
 const cors = require('cors')
 import _ from 'lodash'
 
 var app = express();
-
-const root = process.env.NODE_ENV === "production" ? __dirname + '/../' : __dirname
-
-// TODO python: images, format meanings, assign id, nicer homepage
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -19,7 +13,9 @@ app.use(cors());
 //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 //   next();
 // });
-
+app.get('/ping', function (req, res) {
+  res.status(200).json('pong')
+})
 app.get('/card', function (req, res) {
   const {
     cards
