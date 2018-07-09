@@ -10,9 +10,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var path = require('path');
+var cors = require('cors');
 
 
 var app = express();
+app.use(cors());
 var router = express.Router();
 
 var root = process.env.NODE_ENV === "production" ? __dirname + '/../' : __dirname;
@@ -23,12 +25,16 @@ app.use(bodyParser.json());
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
 app.get('/', function (req, res) {
-  return res.sendFile('data/index.html', { root: root });
+  return res.sendFile('data/index.html', {
+    root: root
+  });
 });
 
 app.get('/documentation.yaml', function (req, res) {
   console.log(process.env.NODE_ENV);
-  return res.sendFile('data/RWS-card-api.yaml', { root: root });
+  return res.sendFile('data/RWS-card-api.yaml', {
+    root: root
+  });
 });
 
 app.use('/api/v1', router);
@@ -45,7 +51,10 @@ router.get('/', function (req, res) {
 router.get('/cards', function (req, res) {
   var cards = res.locals.rawData.cards;
 
-  return res.json({ nhits: cards.length, cards: cards }).status(200);
+  return res.json({
+    nhits: cards.length,
+    cards: cards
+  }).status(200);
 });
 
 router.get('/cards/search', function (req, res) {
@@ -75,7 +84,10 @@ router.get('/cards/search', function (req, res) {
   for (var k in req.query) {
     _loop(k);
   }
-  return res.json({ nhits: filteredCards.length, cards: filteredCards }).status(200);
+  return res.json({
+    nhits: filteredCards.length,
+    cards: filteredCards
+  }).status(200);
 });
 
 router.get('/cards/random', function (req, res) {
@@ -99,7 +111,10 @@ router.get('/cards/random', function (req, res) {
   for (var i = 0; i < n; i++) {
     _loop2(i);
   }
-  return res.json({ nhits: returnCards.length, cards: returnCards });
+  return res.json({
+    nhits: returnCards.length,
+    cards: returnCards
+  });
 });
 
 router.get('/cards/:id', function (req, res, next) {
@@ -109,7 +124,10 @@ router.get('/cards/:id', function (req, res, next) {
     return c.name_short === req.params.id;
   });
   if (_lodash2.default.isUndefined(card)) return next();
-  return res.json({ nhits: 1, card: card }).status(200);
+  return res.json({
+    nhits: 1,
+    card: card
+  }).status(200);
 });
 
 router.get('/cards/suits/:suit', function (req, res, next) {
@@ -119,7 +137,10 @@ router.get('/cards/suits/:suit', function (req, res, next) {
     return c.suit === req.params.suit;
   });
   if (!cardsOfSuit.length) return next();
-  return res.json({ nhits: cardsOfSuit.length, cards: cardsOfSuit }).status(200);
+  return res.json({
+    nhits: cardsOfSuit.length,
+    cards: cardsOfSuit
+  }).status(200);
 });
 
 router.get('/cards/courts/:court', function (req, res, next) {
@@ -132,7 +153,10 @@ router.get('/cards/courts/:court', function (req, res, next) {
     return c.value === courtSg;
   });
   if (!cardsOfCourt.length) return next();
-  return res.json({ nhits: cardsOfCourt.length, cards: cardsOfCourt }).status(200);
+  return res.json({
+    nhits: cardsOfCourt.length,
+    cards: cardsOfCourt
+  }).status(200);
 });
 
 router.use(function (req, res, next) {
@@ -144,7 +168,12 @@ router.use(function (req, res, next) {
 router.use(function (err, req, res, next) {
   console.log(err);
   res.status(err.status || 500);
-  res.json({ error: { status: err.status, message: err.message } });
+  res.json({
+    error: {
+      status: err.status,
+      message: err.message
+    }
+  });
 });
 
 var server = app.listen(process.env.PORT || 8080, function () {
