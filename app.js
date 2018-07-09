@@ -37,7 +37,6 @@ app.get('/card', function (req, res) {
   })
 })
 
-var server = app.listen(process.env.PORT || 8080, function () {
-  var port = server.address().port;
-  console.log("RWS API Server now running on port", port);
+app.listen(process.env.PORT || 8080, () => {
+  console.log('up and running');
 })
