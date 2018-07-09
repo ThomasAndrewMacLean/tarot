@@ -8,7 +8,7 @@ import _ from 'lodash'
 var app = express();
 app.use(cors());
 var router = express.Router()
-
+router.use(cors())
 const root = process.env.NODE_ENV === "production" ? __dirname + '/../' : __dirname
 
 // TODO python: images, format meanings, assign id, nicer homepage
