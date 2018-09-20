@@ -18,16 +18,16 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "fs": "0.0.1-security",
+    "fs": "0.0.2",
     "moment": "^2.20.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
     "async": "^2.6.0",
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "cheerio": "^1.0.0-rc.2",
-    "jsonfile": "^4.0.0",
+    "jsonfile": "^5.0.0",
     "nodemon": "^1.14.12"
   },
   "engines": {
